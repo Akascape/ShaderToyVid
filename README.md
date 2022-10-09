@@ -25,7 +25,7 @@ There is always some chances of shader errors with this tool so I recommend you 
 
 Not all shaders from shadertoy are supported in ShaderToyVid, those shaders which have **more than one i-channel or having any buffers are not supported.**
 
-I have collected some shaders from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
+I have collected some effect-shaders from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
 
 [<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">](https://github.com/Akascape/ShaderToyVid/files/9741909/Shaders.zip)
 
