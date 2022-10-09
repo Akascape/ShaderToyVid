@@ -1,7 +1,7 @@
 # ShaderToyVid
 This is a tool build with python that can easily display or render any effect shader from [Shadertoy.com](https://www.shadertoy.com/)
 
-### [<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Akascape/ShaderToyVid?color=orange&label=Source%20Code&logo=Python&logoColor=yellow&style=for-the-badge"  width="200">](https://github.com/Akascape/ShaderToyVid/archive/refs/heads/main.zip)
+### [<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Akascape/ShaderToyVid?color=orange&label=Source%20Code&logo=Python&logoColor=yellow&style=for-the-badge"  width="250">](https://github.com/Akascape/ShaderToyVid/archive/refs/heads/main.zip)
 
 ## Features
 - Ability to input any video as an i-channel
@@ -9,6 +9,7 @@ This is a tool build with python that can easily display or render any effect sh
 - Apply effects like CRT filter, VHS, glitch effects, retro effects and much more (All from Shadertoy.com)
 
 ## How it works?
+https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-a152-1e08004ac594.mp4
 
 ## Dependencies (python)
 - Arcade
@@ -30,6 +31,6 @@ Please Note: This project is given without any warranty
 
 ## Future Development (Notes)
 - Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349)
-- Live Preview is unstable and is not implemented yet.
+- Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
 - I don't know if buffer support is available in arcade shadertoy, maybe I will try to research more about it in future.
 - Any advice or pull requests are welcomed. 
