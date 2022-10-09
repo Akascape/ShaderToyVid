@@ -1,7 +1,7 @@
 # ShaderToyVid
 This is a tool build with python that can easily display and render any effect shader from [**Shadertoy.com**](https://www.shadertoy.com/)
 
-[<img src="https://img.shields.io/badge/DOWNLOAD-ShaderToyVid-informational?&color=orange&logo=Python&logoColor=yellow&style=for-the-badge"  width="250">](https://github.com/Akascape/ShaderToyVid/archive/refs/heads/main.zip)
+[<img src="https://img.shields.io/badge/DOWNLOAD-ShaderToyVid-informational?&color=orange&logo=Python&logoColor=yellow&style=for-the-badge"  width="300">](https://github.com/Akascape/ShaderToyVid/archive/refs/heads/main.zip)
 
 ## Features
 - Ability to input any **video** as an i-channel
