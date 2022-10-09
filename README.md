@@ -23,11 +23,13 @@ There is always some chances of shader errors with this tool so I recommend you 
 
 Not all shaders from shadertoy are supported in ShaderToyVid, those shaders which have more than one i-channel or having any buffers are not supported. 
 
-I have taken some shaders from shadertoy.com which are available in the `My Shaders` folder. (Credits are given within the files)
+I have collected some shaders from shadertoy.com which you can download from here. (Sources are given within the files) 
+
+[<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">]()
 
 Please Note: This project is given **without any warranty**!
 
-[<img src="https://img.shields.io/badge/LICENSE-MIT-informational?&color=yellow&style=for-the-badge" width="100">](https://github.com/Akascape/ShaderToyVid/blob/main/LICENSE)
+[<img src="https://img.shields.io/badge/LICENSE-MIT-informational?&color=yellow&style=for-the-badge" width="100">]()
 
 ## Future Development (Notes)
 - Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349)
