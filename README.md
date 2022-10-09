@@ -33,4 +33,6 @@ Please Note: This project is given without any warranty
 - Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349)
 - Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
 - I don't know if buffer support is available in arcade shadertoy, maybe I will try to research more about it in future.
+- Tip: You can use my [Vdo-Img Conversion Tools](https://github.com/Akascape/Vdo-Img-Conversion-Tools) to convert image-sequence to video files easily.
 - Any advice or pull requests are welcomed. 
+
