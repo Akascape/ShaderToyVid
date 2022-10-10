@@ -27,7 +27,7 @@ Not all shaders from shadertoy are supported in ShaderToyVid, those shaders whic
 
 I have collected some **effect-shaders** from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
 
-[<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">](https://github.com/Akascape/ShaderToyVid/files/9741909/Shaders.zip)
+[<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">](https://github.com/Akascape/ShaderToyVid/files/9746351/Shaders.zip)
 
 *Paste the `My Shaders` folder with ShaderToyVid.*
 
