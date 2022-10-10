@@ -166,7 +166,7 @@ class HomePage(customtkinter.CTk):
         nf=0
         while os.path.exists(newdir):
             nf=nf+1
-            newdir = os.path.splitext(ofile)[0]+"("+str(nf)+")"
+            newdir = os.path.splitext(ofile)[0]+"_"+self.combobox_1.get()+"("+str(nf)+")"
         os.mkdir(newdir)
         try:
             self.saveButton.configure(state=tkinter.DISABLED)
