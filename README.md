@@ -36,7 +36,7 @@ I have collected some **effect-shaders** from shadertoy.com which you can **down
 Sometimes you may have to **force quit** the program if the shader window freezes after any shader-error, so keep that in mind.
 
 ## Future Development
-- Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349)
+- Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349).
 - Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
 - I don't know if buffer support is available in arcade shadertoy, maybe I will try to research more about it in future.
 - Any advice or pull requests are welcomed. 
