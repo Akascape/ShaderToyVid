@@ -1,7 +1,7 @@
-#####################----ShaderToyVid------######################
+#####################------ShaderToyVid------######################
 #Author: Akash Bora
 #License: MIT (without any warranty)
-#Version: 0.1 beta
+#Version: 0.2 beta
 
 #Import the required modules
 import arcade
@@ -11,9 +11,7 @@ import tkinter
 from tkinter import filedialog, ttk
 import customtkinter
 import os
-
-customtkinter.set_appearance_mode("Dark") 
-customtkinter.set_default_color_theme("sweetkind")
+import time
 
 class HomePage(customtkinter.CTk):
     
@@ -27,13 +25,13 @@ class HomePage(customtkinter.CTk):
         self.title("ShaderToyVid")
         self.geometry(f"{HomePage.WIDTH}x{HomePage.HEIGHT}+{50}+{50}")
         self.minsize(250, 700)
-
+        self.configure(fg_color="#181b28")
         # configure the grid layout
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bind("<1>", lambda event: event.widget.focus_set())
-        self.frame = customtkinter.CTkFrame(master=self)
+        self.frame = customtkinter.CTkFrame(master=self, fg_color="#181b28", border_width=2, border_color="#10121f")
         self.frame.grid(row=0, column=0, sticky="nswe", padx=(10,10), pady=20)
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid_rowconfigure((0,1,2,3,4,5,6), weight=1)
@@ -41,15 +39,15 @@ class HomePage(customtkinter.CTk):
         
         #Button for importing video
         self.open_video = customtkinter.CTkButton(master=self.frame, height=40,
-                                                text="Input Video",
-                                                text_font=("Roboto Medium",15),
+                                                text="Input Video", fg_color="#212435",
+                                                font=("Roboto Medium",15),
                                                 command=self.open_vid)
         self.open_video.grid(row=0, column=0, padx=30, pady=(30,0),sticky="we")
 
         #Just a label 
-        self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=10,
+        self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25,
                                               text="Choose a Shader Effect",
-                                              text_font=("Roboto Medium", -16))  # font name and size in px
+                                              font=("Roboto Medium", -16))  # font name and size in px
         self.label_1.grid(row=1, column=0, pady=(15,0), padx=30, sticky="we")
 
         #Import some shaders from the default folder (My Shaders) if exists
@@ -64,13 +62,14 @@ class HomePage(customtkinter.CTk):
             print("No shaders found!")
 
         #Option Menu   
-        self.combobox_1 = customtkinter.CTkOptionMenu(master=self.frame, width=120, height=35,
+        self.combobox_1 = customtkinter.CTkOptionMenu(master=self.frame, width=120, height=35, button_color="black",
+                                                fg_color="#212435", dropdown_fg_color="#212435", dropdown_hover_color="#181b28",
                                                 values=myeffect, command=self.open_script) 
         self.combobox_1.grid(row=2, column=0, pady=20, padx=30, sticky="we")
 
         #The code box
-        self.textbox = tkinter.Text(master=self.frame, font = ("Roboto Medium",10), bg=customtkinter.ThemeManager.theme["color"]["button"][1],
-                                    fg=customtkinter.ThemeManager.theme["color"]["text"][1],relief="flat")
+        self.textbox = tkinter.Text(master=self.frame, font = ("Roboto Medium",10), bg="#212435",
+                                    fg="#dce4ee",relief="flat")
         self.textbox.grid(row=3, column=0, columnspan=2, padx=20, pady=(0, 0), sticky="nsew")
 
         #Preview Button
@@ -78,7 +77,8 @@ class HomePage(customtkinter.CTk):
                                                 width=140,
                                                 height=40,
                                                 text="PREVIEW",
-                                                text_font=("Roboto Medium",15),
+                                                fg_color="#212435",
+                                                font=("Roboto Medium",15),
                                                 command=self.render_show)
         self.previewButton.grid(row=4, column=0, padx=20, pady=(35,10))
 
@@ -87,15 +87,16 @@ class HomePage(customtkinter.CTk):
                                                 width=140,
                                                 height=40,
                                                 text="RENDER",
-                                                text_font=("Roboto Medium",15),
+                                                fg_color="#212435",
+                                                font=("Roboto Medium",15),
                                                 command=self.render_export)
         self.saveButton.grid(row=5, column=0, padx=30, pady=(10,10))
 
         #Another label that will show the version
-        self.label_2 = customtkinter.CTkLabel(master=self.frame, width=10, height=10,
-                                              text="v0.1 beta")
+        self.label_2 = customtkinter.CTkLabel(master=self.frame, width=10, height=20,
+                                              text="v0.2 beta")
         
-        self.label_2.grid(row=6,column=0, padx=10, sticky="e")
+        self.label_2.grid(row=6,column=0, padx=10, pady=(0,10), sticky="e")
 
     #Opens the filedialog to import a video
     def open_vid(self):
@@ -176,8 +177,10 @@ class HomePage(customtkinter.CTk):
             self.previewButton.configure(state=tkinter.NORMAL)
         except:
             self.saveButton.configure(state=tkinter.NORMAL)
-            self.previewButton.configure(state=tkinter.NORMAL)
+            self.previewButton.configure(state=tkinter.NORMAL)   
             print("Shader Error")
+            if preview==False:
+                print("Error loading the frames, please retry!")
             arcade.exit()
             return
 
@@ -211,14 +214,8 @@ class HomePage(customtkinter.CTk):
                 self2.set_size(width, height)
                 
             def on_draw(self2):
-                global currentframe
                 self2.clear()
                 self2.shadertoy.render()
-                if preview==False:
-                    image=arcade.get_image()
-                    name = newdir+'/Frame-' + (str(currentframe)).zfill(6) + ".png"
-                    image.save(name,'PNG')
-                    currentframe +=1
                 
             def on_update(self2, delta_time: float):
                 self2.shadertoy.time += delta_time
@@ -229,10 +226,18 @@ class HomePage(customtkinter.CTk):
                 super().on_resize(width, height)
                 
             def next_frame(self2):
+                global currentframe
                 exists, frame = self2.video.read()
                 frame = cv2.flip(frame, 0)
-                if exists:
+                if frame is not None:
                     self2.video_texture.write(frame)
+                    if preview==False:
+                        if currentframe!=0:
+                            time.sleep(0.2) # add a slight delay
+                            image=arcade.get_image()
+                            name = newdir+'/Frame-' + (str(currentframe)).zfill(6) + ".png"
+                            image.save(name,'PNG')
+                        currentframe +=1    
                 else:
                     if preview==False:
                         arcade.finish_render()
