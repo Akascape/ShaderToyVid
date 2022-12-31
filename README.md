@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-
 
 ## Dependencies (python)
 - **Arcade**
-- **Customtkinter** (use version 4.6.3)
+- **Customtkinter**
 - **OpenCV**
 
 ## Details
