@@ -41,5 +41,6 @@ Sometimes you may have to **force quit** the program if the shader window freeze
 - Any advice or pull requests are welcomed. 
 
 Please Note: This project is released under MIT license **without any warranty**!
+**Current version: 0.3**
 
 [<img src="https://img.shields.io/badge/LICENSE-MIT-informational?&color=yellow&style=for-the-badge" width="100">](https://github.com/Akascape/ShaderToyVid/blob/main/LICENSE)
