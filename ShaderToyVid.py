@@ -15,7 +15,7 @@ import numpy
 class HomePage(customtkinter.CTk):
     
     global ofile, sfile  
-    ofile=""
+    ofile = ""
     WIDTH = 400
     HEIGHT = 700
 
