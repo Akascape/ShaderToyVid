@@ -5,7 +5,8 @@ This is a tool built with python that can easily display and render any effect-s
 
 ## Features
 - Ability to input any **video** as an i-channel
-- Easily **export** the shader filter/effect with the video
+- Render to video or image-sequence
+- Quick conversions
 - Apply effects like CRT filters, VHS filters, glitch and retro effects, and much more (**Read Details**)
 
 ## How it works?
@@ -16,6 +17,7 @@ https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-
 - **Arcade**
 - **Customtkinter**
 - **OpenCV**
+- **Numpy**
 
 ## Details
 
@@ -31,16 +33,13 @@ I have collected some **effect-shaders** from shadertoy.com which you can **down
 
 *Paste the `My Shaders` folder with ShaderToyVid.*
 
-**Tip:** You can use my [Vdo-Img Conversion Tools](https://github.com/Akascape/Vdo-Img-Conversion-Tools) to convert the image-sequences to video files easily.
-
 Sometimes you may have to **force quit** the program if the shader window freezes after any shader-error, so keep that in mind.
 
 ## Future Development
-- Direct video capture is not available in Arcade, though it is in [development](https://github.com/pythonarcade/arcade/issues/1349).
 - Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
 - I don't know if buffer support is available in arcade shadertoy, maybe I will try to research more about it in future.
 - Any advice or pull requests are welcomed. 
 
-Please Note: This project is given **without any warranty**!
+Please Note: This project is released under MIT license **without any warranty**!
 
 [<img src="https://img.shields.io/badge/LICENSE-MIT-informational?&color=yellow&style=for-the-badge" width="100">](https://github.com/Akascape/ShaderToyVid/blob/main/LICENSE)
