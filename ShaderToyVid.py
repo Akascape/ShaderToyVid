@@ -49,8 +49,8 @@ class HomePage(customtkinter.CTk):
         # Import some shaders from the default folder (My Shaders) if exists        
         myeffect=["Custom"]
         try:
-            mydir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "My Shaders")
-            scriptfiles = os.listdir(mydir)
+            self.mydir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "My Shaders")
+            scriptfiles = os.listdir(self.mydir)
             for i in scriptfiles:
                 myeffect.append(i)
         except:
@@ -120,7 +120,7 @@ class HomePage(customtkinter.CTk):
                     self.textbox.insert(1.0, f.read())
                 f.close()
         else:
-            with open("My Shaders/"+value, 'r') as f:
+            with open(os.path.join(self.mydir, value), 'r') as f:
                     self.textbox.delete("1.0","end")
                     self.textbox.insert(1.0, f.read())
             f.close()
