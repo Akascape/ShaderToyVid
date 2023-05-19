@@ -23,7 +23,9 @@ https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-
 
 This is an *experimental* project based on this [shadertoy feature](https://github.com/pythonarcade/arcade/blob/development/arcade/experimental/shadertoy.py) of [Arcade](https://github.com/pythonarcade/arcade). 
 
-There is always some chances of shader errors with this tool so I recommend you to copy the shaders properly from shadertoy.
+There is always some chances of shader errors with this tool so I recommend you to copy the shaders properly from shadertoy. 
+
+Sometimes, you have to keep on closing the shader window and try running it again.
 
 Not all shaders from shadertoy are supported in ShaderToyVid, those shaders which have **more than one i-channel or having any buffers are not supported.**
 
