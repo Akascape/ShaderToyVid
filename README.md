@@ -39,7 +39,7 @@ Sometimes you may have to **force quit** the program if the shader window freeze
 
 ## Future Development
 - Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
-- I don't know if buffer support is available in arcade shadertoy, maybe I will try to research more about it in future.
+- I guess there is buffer support in the arcade shadertoy but I can't find any example usage/guide.
 - Any advice or pull requests are welcomed. 
 
 Please Note: This project is released under MIT license **without any warranty**!
