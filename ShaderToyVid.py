@@ -236,8 +236,6 @@ class HomePage(customtkinter.CTk):
             self.buff_D_ichannel_1.configure(values=self.values)
             self.buff_D_ichannel_2.configure(values=self.values)
             self.buff_D_ichannel_3.configure(values=self.values)             
-        else:
-            return
             
     def do_popup(self, event, frame):
             try: frame.tk_popup(event.x_root, event.y_root)
