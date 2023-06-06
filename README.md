@@ -30,13 +30,15 @@ There is always some chances of shader errors with this tool so I recommend you 
 
 Sometimes, you have to keep on closing the shader window and try running it again.
 
+**You can right click on the open button to import any texture image.**
+
 I have collected some **effect-shaders** from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
 
 [<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">](https://github.com/Akascape/ShaderToyVid/files/9746351/Shaders.zip)
 
 *Paste the `My Shaders` folder with ShaderToyVid.*
 
-Sometimes you may have to **force quit** the program if the shader window freezes after any shader-error, so keep that in mind.
+Sometimes you also have to **force quit** the program if the shader window freezes after any complex shader-error.
 
 ## Future Development
 - Live Preview is unstable and is not implemented. (The demo video was just to show the effects)
