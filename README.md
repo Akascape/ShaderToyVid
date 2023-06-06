@@ -8,6 +8,9 @@ This is a tool built with python that can easily display and render any effect-s
 - Render to video or image-sequence
 - Quick conversions
 - Apply effects like CRT filters, VHS filters, glitch and retro effects, and much more (**Read Details**)
+- Add buffers and ichannels
+
+![Screenshot](https://github.com/Akascape/ShaderToyVid/assets/89206401/5cd14fb5-17bc-4566-b87e-b80cf7bfe6f6)
 
 ## How it works?
 
@@ -27,7 +30,7 @@ There is always some chances of shader errors with this tool so I recommend you 
 
 Sometimes, you have to keep on closing the shader window and try running it again.
 
-Not all shaders from shadertoy are supported in ShaderToyVid, those shaders which have **more than one i-channel or having any buffers are not supported.**
+Not all shaders from shadertoy are supported in ShaderToyVid, shader can contain only buffers, mainimage and one video ichannel.
 
 I have collected some **effect-shaders** from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
 
@@ -38,9 +41,8 @@ I have collected some **effect-shaders** from shadertoy.com which you can **down
 Sometimes you may have to **force quit** the program if the shader window freezes after any shader-error, so keep that in mind.
 
 ## Future Development
-- Live Preview is unstable and is not implemented yet. (The demo video was just to show the effects)
-- I guess there is buffer support in the arcade shadertoy but I can't find any example usage/guide.
-- Any advice or pull requests are welcomed. 
+- Live Preview is unstable and is not implemented. (The demo video was just to show the effects)
+- Any suggestion or pull requests are welcomed. 
 
 Please Note: This project is released under MIT license **without any warranty**!
 
