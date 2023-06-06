@@ -32,6 +32,7 @@ class HomePage(customtkinter.CTk):
         self.grid_rowconfigure(0, weight=1)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bind("<1>", lambda event: event.widget.focus_set())
+        self.font = customtkinter.ThemeManager.theme["CTkFont"]["family"]
         
         self.frame = customtkinter.CTkFrame(master=self, fg_color="#181b28", border_width=2, border_color="#10121f")
         self.frame.grid(row=0, column=0, sticky="nswe", padx=(10,10), pady=20)
@@ -40,11 +41,11 @@ class HomePage(customtkinter.CTk):
         
         # button for importing video
         self.open_video = customtkinter.CTkButton(master=self.frame, height=40, text="Input Video", fg_color="#212435",
-                                                font=("Roboto Medium",15), command=self.open_vid)
+                                                font=(self.font,15,"bold"), command=self.open_vid)
         self.open_video.grid(row=0, column=0, padx=30, pady=(30,0),sticky="we", columnspan=2)
 
         self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25, text="Choose a Shader Effect",
-                                              font=("Roboto Medium", -16)) 
+                                              font=(self.font, -16)) 
         self.label_1.grid(row=1, column=0, pady=(15,0), padx=30, sticky="we", columnspan=2)
 
         # Import some shaders from the default folder (My Shaders) if exists        
@@ -178,12 +179,12 @@ class HomePage(customtkinter.CTk):
         self.buff_D_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
         
         # preview Button
-        self.previewButton = customtkinter.CTkButton(master=self.frame, width=140, height=40, text="PREVIEW", fg_color="#212435", font=("",15),
+        self.previewButton = customtkinter.CTkButton(master=self.frame, width=140, height=40, text="PREVIEW", fg_color="#212435", font=(self.font,15,"bold"),
                                                      command=self.render_show)
         self.previewButton.grid(row=4, column=0, padx=(20,5), pady=(25,10), sticky="we")
 
         # render Button
-        self.saveButton = customtkinter.CTkButton(master=self.frame, width=140, height=40, text="RENDER", fg_color="#212435", font=("Roboto Medium",15),
+        self.saveButton = customtkinter.CTkButton(master=self.frame, width=140, height=40, text="RENDER", fg_color="#212435", font=(self.font,15,"bold"),
                                                   command=self.render_export)
         self.saveButton.grid(row=4, column=1, padx=(5,20), pady=(25,10), sticky="we")
 
