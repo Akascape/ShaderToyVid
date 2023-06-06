@@ -1,4 +1,4 @@
-#####################------ShaderToyVid------#####################
+#####################------ShaderToyVid------######################
 
 #Author: Akash Bora
 #License: MIT (without any warranty)
@@ -43,7 +43,12 @@ class HomePage(customtkinter.CTk):
         self.open_video = customtkinter.CTkButton(master=self.frame, height=40, text="Input Video", fg_color="#212435",
                                                 font=(self.font,15,"bold"), command=self.open_vid)
         self.open_video.grid(row=0, column=0, padx=30, pady=(30,0),sticky="we", columnspan=2)
-
+        
+        self.click_menu = tkinter.Menu(self.frame, tearoff=False, background='#343e5a', fg='white', borderwidth=0, bd=0)
+        self.click_menu.add_command(label="import texture", command=lambda: self.add_texture())
+           
+        self.open_video.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.click_menu))
+        
         self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25, text="Choose a Shader Effect",
                                               font=(self.font, -16)) 
         self.label_1.grid(row=1, column=0, pady=(15,0), padx=30, sticky="we", columnspan=2)
@@ -58,7 +63,7 @@ class HomePage(customtkinter.CTk):
                     myeffect.append(i)
         except:
             print("No shaders found!")
-
+    
         # option Menu   
         self.combobox_1 = customtkinter.CTkOptionMenu(master=self.frame, width=120, height=35, button_color="#212435", hover=False,
                                                      fg_color="#212435", dropdown_fg_color="#212435", dropdown_hover_color="#181b28",
@@ -76,7 +81,8 @@ class HomePage(customtkinter.CTk):
         self.tabview.add("Buf D")
 
         self.values = ["None", "Video", "Buf A", "Buf B", "Buf C", "Buf D"]
-        
+        self.textures = {}
+        self.num = 0 
         # the code box for Image Tab
         self.textbox = customtkinter.CTkTextbox(master=self.tabview.tab("Image"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
         self.textbox.pack(fill="both",padx=5, pady=5, expand=True)
@@ -198,7 +204,45 @@ class HomePage(customtkinter.CTk):
         # version label
         self.label_3 = customtkinter.CTkLabel(master=self.frame, width=10, height=20, text="v0.4 beta")      
         self.label_3.grid(row=5, column=1, padx=10, pady=5, sticky="se")
+        
+    def add_texture(self):
+        texture_file = tkinter.filedialog.askopenfilename(filetypes =[('Image', ['*jpg','*png']),('All Files', '*.*')])
+        if texture_file:
+            self.textures[f"texture{self.num}"] = texture_file
+            self.values.append(f"texture{self.num}")
+            self.num+=1
+            
+            self.ichannel_0.configure(values=self.values)
+            self.ichannel_1.configure(values=self.values)
+            self.ichannel_3.configure(values=self.values)
+            self.ichannel_3.configure(values=self.values)
+            
+            self.buff_A_ichannel_0.configure(values=self.values)
+            self.buff_A_ichannel_1.configure(values=self.values)
+            self.buff_A_ichannel_2.configure(values=self.values)
+            self.buff_A_ichannel_3.configure(values=self.values)
+            
+            self.buff_B_ichannel_0.configure(values=self.values)
+            self.buff_B_ichannel_1.configure(values=self.values)
+            self.buff_B_ichannel_2.configure(values=self.values)
+            self.buff_B_ichannel_3.configure(values=self.values)
 
+            self.buff_C_ichannel_0.configure(values=self.values)
+            self.buff_C_ichannel_1.configure(values=self.values)
+            self.buff_C_ichannel_2.configure(values=self.values)
+            self.buff_C_ichannel_3.configure(values=self.values)
+
+            self.buff_D_ichannel_0.configure(values=self.values)
+            self.buff_D_ichannel_1.configure(values=self.values)
+            self.buff_D_ichannel_2.configure(values=self.values)
+            self.buff_D_ichannel_3.configure(values=self.values)             
+        else:
+            return
+            
+    def do_popup(self, event, frame):
+            try: frame.tk_popup(event.x_root, event.y_root)
+            finally: frame.grab_release()
+            
     def open_vid(self):
         """ opens the filedialog to import a video """
         global ofile
@@ -338,6 +382,8 @@ class HomePage(customtkinter.CTk):
                     buf_channel = window.shadertoy.buffer_c.texture if window.shadertoy.buffer_c is not None else None
                 elif box.get()=="Buf D":
                     buf_channel = window.shadertoy.buffer_d.texture if window.shadertoy.buffer_d is not None else None
+                elif box.get() in self.textures.keys():
+                    buf_channel = window.ctx.load_texture(self.textures[box.get()])
                     
                 if not buf_channel: return
                 if channel==0:
