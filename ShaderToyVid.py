@@ -214,7 +214,7 @@ class HomePage(customtkinter.CTk):
             
             self.ichannel_0.configure(values=self.values)
             self.ichannel_1.configure(values=self.values)
-            self.ichannel_3.configure(values=self.values)
+            self.ichannel_2.configure(values=self.values)
             self.ichannel_3.configure(values=self.values)
             
             self.buff_A_ichannel_0.configure(values=self.values)
