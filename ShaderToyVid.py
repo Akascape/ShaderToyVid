@@ -1,4 +1,4 @@
-#####################------ShaderToyVid------######################
+#####################------ShaderToyVid------#####################
 
 #Author: Akash Bora
 #License: MIT (without any warranty)
