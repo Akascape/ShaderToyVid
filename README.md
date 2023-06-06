@@ -30,8 +30,6 @@ There is always some chances of shader errors with this tool so I recommend you 
 
 Sometimes, you have to keep on closing the shader window and try running it again.
 
-Not all shaders from shadertoy are supported in ShaderToyVid, shader can contain only buffers, mainimage and one video ichannel.
-
 I have collected some **effect-shaders** from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
 
 [<img src="https://img.shields.io/badge/DOWNLOAD-SHADERS-informational?&color=green&style=for-the-badge" width="200">](https://github.com/Akascape/ShaderToyVid/files/9746351/Shaders.zip)
