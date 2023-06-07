@@ -2,7 +2,7 @@
 
 #Author: Akash Bora
 #License: MIT (without any warranty)
-#Version: 0.4 beta
+#Version: 0.5 beta
 #HomePage: https://github.com/Akascape/ShaderToyVid
 
 import arcade
@@ -46,10 +46,10 @@ class HomePage(customtkinter.CTk):
         
         self.click_menu = tkinter.Menu(self.frame, tearoff=False, background='#343e5a', fg='white', borderwidth=0, bd=0)
         self.click_menu.add_command(label="import texture", command=lambda: self.add_texture())
-           
+        
         self.open_video.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.click_menu))
         
-        self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25, text="Choose a Shader Effect",
+        self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25, text="Choose Shader Effect",
                                               font=(self.font, -16)) 
         self.label_1.grid(row=1, column=0, pady=(15,0), padx=30, sticky="we", columnspan=2)
 
@@ -74,15 +74,21 @@ class HomePage(customtkinter.CTk):
                                                 segmented_button_fg_color="#0e1321",
                                                 segmented_button_unselected_color="#0e1321")
         self.tabview.grid(row=3, column=0, columnspan=2, padx=20, pady=(0, 0), sticky="nsew")
+        self.tabview.add("Common")
         self.tabview.add("Image")
         self.tabview.add("Buf A")
         self.tabview.add("Buf B")
         self.tabview.add("Buf C")
         self.tabview.add("Buf D")
-
+        self.tabview.set("Image")
+        
         self.values = ["None", "Video", "Buf A", "Buf B", "Buf C", "Buf D"]
         self.textures = {}
-        self.num = 0 
+        self.num = 0
+        # the code box for Common Tab
+        self.textbox_common = customtkinter.CTkTextbox(master=self.tabview.tab("Common"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
+        self.textbox_common.pack(fill="both",padx=5, pady=5, expand=True)
+        
         # the code box for Image Tab
         self.textbox = customtkinter.CTkTextbox(master=self.tabview.tab("Image"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
         self.textbox.pack(fill="both",padx=5, pady=5, expand=True)
@@ -202,7 +208,7 @@ class HomePage(customtkinter.CTk):
         self.label_2.grid(row=5, column=0, padx=20, pady=10, sticky="w")
         
         # version label
-        self.label_3 = customtkinter.CTkLabel(master=self.frame, width=10, height=20, text="v0.4 beta")      
+        self.label_3 = customtkinter.CTkLabel(master=self.frame, width=10, height=20, text="v0.5 beta")      
         self.label_3.grid(row=5, column=1, padx=10, pady=5, sticky="se")
         
     def add_texture(self):
@@ -254,6 +260,9 @@ class HomePage(customtkinter.CTk):
         if self.tabview.get()=="Image":
             self.textbox.delete("1.0","end")
             self.textbox.insert(1.0, code)
+        elif self.tabview.get()=="Common":
+            self.textbox_common.delete("1.0","end")
+            self.textbox_common.insert(1.0, code)
         elif self.tabview.get()=="Buf A":
             self.textbox_A.delete("1.0","end")
             self.textbox_A.insert(1.0, code)
@@ -296,8 +305,6 @@ class HomePage(customtkinter.CTk):
             self.saveButton.configure(state=tkinter.DISABLED)
             self.previewButton.configure(state=tkinter.DISABLED)
             self.process()
-            #import threading #Live Preview Test (Unstable)
-            #threading.Thread(target=self.process).start()
             self.saveButton.configure(state=tkinter.NORMAL)
             self.previewButton.configure(state=tkinter.NORMAL)
         except:
@@ -395,9 +402,24 @@ class HomePage(customtkinter.CTk):
 
             def __init__(window, width, height, title):
                 super().__init__(width, height, title, resizable=True)
+
+                main_image_code = self.textbox.get(1.0, "end-1c")
+                buffer_code_A = self.textbox_A.get(1.0, "end-1c")
+                buffer_code_B = self.textbox_B.get(1.0, "end-1c")
+                buffer_code_C = self.textbox_C.get(1.0, "end-1c")
+                buffer_code_D = self.textbox_D.get(1.0, "end-1c")
+
+                common_code = self.textbox_common.get(1.0, "end-1c")
+        
+                if len(common_code)>10:
+                    main_image_code = f"{common_code} \n{main_image_code}"
+                    buffer_code_A = f"{common_code} \n{buffer_code_A}" if len(buffer_code_A)>5 else buffer_code_A
+                    buffer_code_B = f"{common_code} \n{buffer_code_B}" if len(buffer_code_B)>5 else buffer_code_B
+                    buffer_code_C = f"{common_code} \n{buffer_code_C}" if len(buffer_code_C)>5 else buffer_code_C
+                    buffer_code_D = f"{common_code} \n{buffer_code_D}" if len(buffer_code_D)>5 else buffer_code_D
                 
                 try:
-                    window.shadertoy = Shadertoy(window.get_framebuffer_size(),self.textbox.get(1.0, "end-1c"))
+                    window.shadertoy = Shadertoy(window.get_framebuffer_size(), main_image_code)
                 except:
                     warnings.warn("Error in Image code!")
                     window.close()
@@ -409,27 +431,27 @@ class HomePage(customtkinter.CTk):
                 window.video_texture.wrap_x = window.ctx.CLAMP_TO_EDGE
                 window.video_texture.wrap_y = window.ctx.CLAMP_TO_EDGE
                 window.video_texture.swizzle = "BGR1"
-
-                try: window.shadertoy.buffer_a = window.shadertoy.create_buffer(self.textbox_A.get(1.0, "end-1c")) if len(self.textbox_A.get(1.0, "end-1c"))>0 else None
+                
+                try: window.shadertoy.buffer_a = window.shadertoy.create_buffer(buffer_code_A) if len(buffer_code_A)>5 else None
                 except:
                     warnings.warn("Error in Buffer-A code!")
                     window.close()
-                                  
-                try: window.shadertoy.buffer_b = window.shadertoy.create_buffer(self.textbox_B.get(1.0, "end-1c")) if len(self.textbox_B.get(1.0, "end-1c"))>0 else None
+                      
+                try: window.shadertoy.buffer_b = window.shadertoy.create_buffer(buffer_code_B) if len(buffer_code_B)>5 else None
                 except:
                     warnings.warn("Error in Buffer-B code!")
                     window.close()
-                        
-                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(self.textbox_C.get(1.0, "end-1c")) if len(self.textbox_C.get(1.0, "end-1c"))>0 else None
+         
+                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_C) if len(buffer_code_C)>5 else None
                 except:
                     warnings.warn("Error in Buffer-C code!")
                     window.close()
-                                  
-                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(self.textbox_D.get(1.0, "end-1c")) if len(self.textbox_D.get(1.0, "end-1c"))>0 else None
+              
+                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_D) if len(buffer_code_D)>5 else None
                 except:
                     warnings.warn("Error in Buffer-D code!")
                     window.close()
-                                  
+                    
                 for i in range(4):
                     window.add_channels(self, channel=i, buffer=window.shadertoy, boxes="self.ichannel")
                     
@@ -493,7 +515,6 @@ class HomePage(customtkinter.CTk):
                             tkinter.messagebox.showinfo("Done!", "Video saved: "+os.path.basename(output_file))
                     else:
                         window.video.set(1, 0)
-                #window.shadertoy.reload(self.textbox.get(1.0, "end-1c")) #Live Preview Test (Unstable)
                             
         ShadertoyVideo(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.run()
