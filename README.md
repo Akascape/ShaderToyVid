@@ -21,7 +21,8 @@ https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-
 - **Customtkinter**
 - **OpenCV**
 - **Numpy**
-
+- **Chlorophyll**
+- 
 ## Details
 
 This is an *experimental* project based on this [shadertoy feature](https://github.com/pythonarcade/arcade/blob/development/arcade/experimental/shadertoy.py) of [Arcade](https://github.com/pythonarcade/arcade). 
