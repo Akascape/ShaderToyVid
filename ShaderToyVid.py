@@ -13,6 +13,8 @@ import customtkinter
 import os
 import numpy
 import warnings
+import pygments.lexers
+from chlorophyll import CodeView
 
 class HomePage(customtkinter.CTk):
     
@@ -85,13 +87,33 @@ class HomePage(customtkinter.CTk):
         self.values = ["None", "Video", "Buf A", "Buf B", "Buf C", "Buf D"]
         self.textures = {}
         self.num = 0
+        self.textboxes = []
+
         # the code box for Common Tab
-        self.textbox_common = customtkinter.CTkTextbox(master=self.tabview.tab("Common"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox_common.pack(fill="both",padx=5, pady=5, expand=True)
+        self.frame_1 = customtkinter.CTkFrame(master=self.tabview.tab("Common"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_1.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox_common = CodeView(self.frame_1, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        
+        self.scrollbar_1 = customtkinter.CTkScrollbar(self.frame_1, command=self.textbox_common.yview)
+        self.scrollbar_1.pack(fill="y", padx=(0,2), pady=7, side="right")
+        
+        self.textbox_common.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox_common.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_1))
+        self.textboxes.append(self.textbox_common)
         
         # the code box for Image Tab
-        self.textbox = customtkinter.CTkTextbox(master=self.tabview.tab("Image"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox.pack(fill="both",padx=5, pady=5, expand=True)
+        self.frame_2 = customtkinter.CTkFrame(master=self.tabview.tab("Image"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_2.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox = CodeView(self.frame_2, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1)
+        
+        self.scrollbar_2 = customtkinter.CTkScrollbar(self.frame_2, command=self.textbox.yview)
+        self.scrollbar_2.pack(fill="y", padx=(0,2), pady=7, side="right")
+        
+        self.textbox.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_2))
+        self.textboxes.append(self.textbox)
 
         self.ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Image"), fg_color="#0e1321", button_color="#212435",
                                                       values=self.values, height=20, width=10)
@@ -111,8 +133,17 @@ class HomePage(customtkinter.CTk):
         self.ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
 
         # the code box for Buf A Tab
-        self.textbox_A = customtkinter.CTkTextbox(master=self.tabview.tab("Buf A"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox_A.pack(fill="both",padx=5, pady=5, expand=True)
+        self.frame_3 = customtkinter.CTkFrame(master=self.tabview.tab("Buf A"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_3.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox_A = CodeView(self.frame_3, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        
+        self.scrollbar_3 = customtkinter.CTkScrollbar(self.frame_3, command=self.textbox_A.yview)
+        self.scrollbar_3.pack(fill="y", padx=(0,2), pady=7, side="right")
+        
+        self.textbox_A.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox_A.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_3))
+        self.textboxes.append(self.textbox_A)
 
         self.buff_A_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf A"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
@@ -131,8 +162,17 @@ class HomePage(customtkinter.CTk):
         self.buff_A_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
 
         # the code box for Buf B Tab
-        self.textbox_B = customtkinter.CTkTextbox(master=self.tabview.tab("Buf B"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox_B.pack(fill="both",padx=5, pady=5, expand=True)
+        self.frame_4 = customtkinter.CTkFrame(master=self.tabview.tab("Buf B"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_4.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox_B = CodeView(self.frame_4, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        
+        self.scrollbar_4 = customtkinter.CTkScrollbar(self.frame_4, command=self.textbox_B.yview)
+        self.scrollbar_4.pack(fill="y", padx=(0,2), pady=7, side="right")
+        
+        self.textbox_B.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox_B.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_4))
+        self.textboxes.append(self.textbox_B)
 
         self.buff_B_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf B"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
@@ -151,8 +191,17 @@ class HomePage(customtkinter.CTk):
         self.buff_B_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
 
         # the code box for Buf C Tab
-        self.textbox_C = customtkinter.CTkTextbox(master=self.tabview.tab("Buf C"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox_C.pack(fill="both",padx=5, pady=5, expand=True)
+        self.frame_5 = customtkinter.CTkFrame(master=self.tabview.tab("Buf C"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_5.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox_C = CodeView(self.frame_5, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        
+        self.scrollbar_5 = customtkinter.CTkScrollbar(self.frame_5, command=self.textbox_C.yview)
+        self.scrollbar_5.pack(fill="y", padx=(0,2), pady=7, side="right")
+
+        self.textbox_C.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox_C.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_5))
+        self.textboxes.append(self.textbox_C)
 
         self.buff_C_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf C"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
@@ -171,9 +220,17 @@ class HomePage(customtkinter.CTk):
         self.buff_C_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
 
         # the code box for Buf D Tab
-        self.textbox_D = customtkinter.CTkTextbox(master=self.tabview.tab("Buf D"), fg_color="#212435", border_width=1, corner_radius=15, height=200)
-        self.textbox_D.pack(fill="both",padx=5, pady=5, expand=True)
-
+        self.frame_6 = customtkinter.CTkFrame(master=self.tabview.tab("Buf D"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
+        self.frame_6.pack(fill="both", padx=5, pady=5, expand=True)
+        
+        self.textbox_D = CodeView(self.frame_6, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.scrollbar_6 = customtkinter.CTkScrollbar(self.frame_6, command=self.textbox_D.yview)
+        self.scrollbar_6.pack(fill="y", padx=(0,2), pady=7, side="right")
+        
+        self.textbox_D.pack(fill="both", padx=(10,0), pady=10, expand=True)
+        self.textbox_D.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_6))
+        self.textboxes.append(self.textbox_D)
+        
         self.buff_D_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf D"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
         self.buff_D_ichannel_0.pack(padx=5, pady=5, side="left", expand=True, fill="x")
@@ -189,7 +246,14 @@ class HomePage(customtkinter.CTk):
         self.buff_D_ichannel_3 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf D"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
         self.buff_D_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
+
+        # remove unwanted widgets:
         
+        for i in self.textboxes:
+            i._vs.grid_forget()
+            i._hs.grid_forget()
+            i._line_numbers.grid_forget()
+            
         # preview Button
         self.previewButton = customtkinter.CTkButton(master=self.frame, width=140, height=40, text="PREVIEW", fg_color="#212435", font=(self.font,15,"bold"),
                                                      command=self.render_show)
@@ -210,6 +274,13 @@ class HomePage(customtkinter.CTk):
         # version label
         self.label_3 = customtkinter.CTkLabel(master=self.frame, width=10, height=20, text="v0.5 beta")      
         self.label_3.grid(row=5, column=1, padx=10, pady=5, sticky="se")
+        
+    def dynamic_scrollbar(self, x, y, scrollbar):
+        if float(x)==0.0 and float(y)==1.0:
+            scrollbar.configure(button_color=scrollbar.cget("bg_color"), button_hover_color=scrollbar.cget("bg_color"))
+        else:
+            scrollbar.configure(button_color="#4a4d50", button_hover_color="#6d7176")
+        scrollbar.set(x,y)
         
     def add_texture(self):
         texture_file = tkinter.filedialog.askopenfilename(filetypes =[('Image', ['*jpg','*png']),('All Files', '*.*')])
