@@ -491,8 +491,12 @@ class HomePage(customtkinter.CTk):
                     buffer.channel_3 = buf_channel
 
             def __init__(window, width, height, title):
-                super().__init__(width, height, title, resizable=True)
-
+                
+                try: super().__init__(width, height, title, resizable=True)
+                except: 
+                    window.close()
+                    return
+                
                 main_image_code = self.textbox.get(1.0, "end-1c")
                 buffer_code_A = self.textbox_A.get(1.0, "end-1c")
                 buffer_code_B = self.textbox_B.get(1.0, "end-1c")
