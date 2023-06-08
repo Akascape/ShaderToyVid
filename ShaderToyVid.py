@@ -50,28 +50,20 @@ class HomePage(customtkinter.CTk):
         self.click_menu.add_command(label="import texture", command=lambda: self.add_texture())
         
         self.open_video.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.click_menu))
+        self.open_video.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu_1))
         
         self.label_1 = customtkinter.CTkLabel(master=self.frame, width=320, height=25, text="Choose Shader Effect",
                                               font=(self.font, -16)) 
         self.label_1.grid(row=1, column=0, pady=(15,0), padx=30, sticky="we", columnspan=2)
 
-        # Import some shaders from the default folder (My Shaders) if exists        
-        myeffect=["Custom"]
-        try:
-            self.mydir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "My Shaders")
-            scriptfiles = os.listdir(self.mydir)
-            for i in scriptfiles:
-                if os.path.splitext(i)[1]==".glsl":
-                    myeffect.append(i)
-        except:
-            print("No shaders found!")
-    
+        self.check_shader_folder()
+        
         # option Menu   
         self.combobox_1 = customtkinter.CTkOptionMenu(master=self.frame, width=120, height=35, button_color="#212435", hover=False,
                                                      fg_color="#212435", dropdown_fg_color="#212435", dropdown_hover_color="#181b28",
-                                                     values=myeffect, command=self.open_script) 
+                                                     values=self.myeffects, command=self.open_script) 
         self.combobox_1.grid(row=2, column=0, pady=20, padx=30, sticky="we", columnspan=2)
-
+        
         self.tabview = customtkinter.CTkTabview(self.frame, fg_color="#181b28", height=400,
                                                 segmented_button_fg_color="#0e1321",
                                                 segmented_button_unselected_color="#0e1321")
@@ -89,11 +81,17 @@ class HomePage(customtkinter.CTk):
         self.num = 0
         self.textboxes = []
 
+        self.right_click_menu = tkinter.Menu(self.tabview, tearoff=False, background='#343e5a', fg='white', borderwidth=0, bd=0)
+        self.right_click_menu.add_command(label="clear", command=self.clear_code)
+        self.right_click_menu.add_command(label="copy", command=self.copy_code)
+        self.right_click_menu.add_command(label="paste", command=self.paste_code)
+        self.right_click_menu.add_command(label="save", command=self.save_code)
+        
         # the code box for Common Tab
         self.frame_1 = customtkinter.CTkFrame(master=self.tabview.tab("Common"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_1.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox_common = CodeView(self.frame_1, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.textbox_common = CodeView(self.frame_1, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         
         self.scrollbar_1 = customtkinter.CTkScrollbar(self.frame_1, command=self.textbox_common.yview)
         self.scrollbar_1.pack(fill="y", padx=(0,2), pady=7, side="right")
@@ -102,11 +100,14 @@ class HomePage(customtkinter.CTk):
         self.textbox_common.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_1))
         self.textboxes.append(self.textbox_common)
         
+        self.textbox_common.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox_common.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        
         # the code box for Image Tab
         self.frame_2 = customtkinter.CTkFrame(master=self.tabview.tab("Image"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_2.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox = CodeView(self.frame_2, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1)
+        self.textbox = CodeView(self.frame_2, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         
         self.scrollbar_2 = customtkinter.CTkScrollbar(self.frame_2, command=self.textbox.yview)
         self.scrollbar_2.pack(fill="y", padx=(0,2), pady=7, side="right")
@@ -114,7 +115,10 @@ class HomePage(customtkinter.CTk):
         self.textbox.pack(fill="both", padx=(10,0), pady=10, expand=True)
         self.textbox.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_2))
         self.textboxes.append(self.textbox)
-
+        
+        self.textbox.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        
         self.ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Image"), fg_color="#0e1321", button_color="#212435",
                                                       values=self.values, height=20, width=10)
         self.ichannel_0.pack(padx=5, pady=5, side="left", expand=True, fill="x")
@@ -136,7 +140,7 @@ class HomePage(customtkinter.CTk):
         self.frame_3 = customtkinter.CTkFrame(master=self.tabview.tab("Buf A"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_3.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox_A = CodeView(self.frame_3, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.textbox_A = CodeView(self.frame_3, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         
         self.scrollbar_3 = customtkinter.CTkScrollbar(self.frame_3, command=self.textbox_A.yview)
         self.scrollbar_3.pack(fill="y", padx=(0,2), pady=7, side="right")
@@ -145,6 +149,9 @@ class HomePage(customtkinter.CTk):
         self.textbox_A.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_3))
         self.textboxes.append(self.textbox_A)
 
+        self.textbox_A.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox_A.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        
         self.buff_A_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf A"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
         self.buff_A_ichannel_0.pack(padx=5, pady=5, side="left", expand=True, fill="x")
@@ -165,7 +172,7 @@ class HomePage(customtkinter.CTk):
         self.frame_4 = customtkinter.CTkFrame(master=self.tabview.tab("Buf B"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_4.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox_B = CodeView(self.frame_4, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.textbox_B = CodeView(self.frame_4, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         
         self.scrollbar_4 = customtkinter.CTkScrollbar(self.frame_4, command=self.textbox_B.yview)
         self.scrollbar_4.pack(fill="y", padx=(0,2), pady=7, side="right")
@@ -174,6 +181,9 @@ class HomePage(customtkinter.CTk):
         self.textbox_B.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_4))
         self.textboxes.append(self.textbox_B)
 
+        self.textbox_B.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox_B.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        
         self.buff_B_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf B"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
         self.buff_B_ichannel_0.pack(padx=5, pady=5, side="left", expand=True, fill="x")
@@ -194,7 +204,7 @@ class HomePage(customtkinter.CTk):
         self.frame_5 = customtkinter.CTkFrame(master=self.tabview.tab("Buf C"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_5.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox_C = CodeView(self.frame_5, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.textbox_C = CodeView(self.frame_5, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         
         self.scrollbar_5 = customtkinter.CTkScrollbar(self.frame_5, command=self.textbox_C.yview)
         self.scrollbar_5.pack(fill="y", padx=(0,2), pady=7, side="right")
@@ -203,6 +213,9 @@ class HomePage(customtkinter.CTk):
         self.textbox_C.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_5))
         self.textboxes.append(self.textbox_C)
 
+        self.textbox_C.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox_C.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        
         self.buff_C_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf C"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
         self.buff_C_ichannel_0.pack(padx=5, pady=5, side="left", expand=True, fill="x")
@@ -223,13 +236,16 @@ class HomePage(customtkinter.CTk):
         self.frame_6 = customtkinter.CTkFrame(master=self.tabview.tab("Buf D"), fg_color="#282a36", border_width=1, corner_radius=15, height=200)
         self.frame_6.pack(fill="both", padx=5, pady=5, expand=True)
         
-        self.textbox_D = CodeView(self.frame_6, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula")
+        self.textbox_D = CodeView(self.frame_6, lexer=pygments.lexers.CLexer, font=(self.font, 10), height=1, color_scheme="dracula", undo=True)
         self.scrollbar_6 = customtkinter.CTkScrollbar(self.frame_6, command=self.textbox_D.yview)
         self.scrollbar_6.pack(fill="y", padx=(0,2), pady=7, side="right")
         
         self.textbox_D.pack(fill="both", padx=(10,0), pady=10, expand=True)
         self.textbox_D.configure(yscrollcommand=lambda x,y: self.dynamic_scrollbar(x,y,self.scrollbar_6))
         self.textboxes.append(self.textbox_D)
+
+        self.textbox_D.bind("<Button-3>", lambda event: self.do_popup(event, frame=self.right_click_menu))
+        self.textbox_D.bind("<Button-2>", lambda event: self.do_popup(event, frame=self.right_click_menu))
         
         self.buff_D_ichannel_0 = customtkinter.CTkOptionMenu(master=self.tabview.tab("Buf D"), fg_color="#0e1321", button_color="#212435",
                                                              values=self.values, height=20, width=10)
@@ -248,7 +264,6 @@ class HomePage(customtkinter.CTk):
         self.buff_D_ichannel_3.pack(padx=5, pady=5, side="left", expand=True, fill="x")
 
         # remove unwanted widgets:
-        
         for i in self.textboxes:
             i._vs.grid_forget()
             i._hs.grid_forget()
@@ -275,6 +290,62 @@ class HomePage(customtkinter.CTk):
         self.label_3 = customtkinter.CTkLabel(master=self.frame, width=10, height=20, text="v0.5 beta")      
         self.label_3.grid(row=5, column=1, padx=10, pady=5, sticky="se")
         
+        self.option_menus = [self.ichannel_0, self.ichannel_1, self.ichannel_2, self.ichannel_3, self.buff_A_ichannel_0, self.buff_A_ichannel_1,
+                             self.buff_A_ichannel_2, self.buff_A_ichannel_3, self.buff_B_ichannel_0, self.buff_B_ichannel_1, self.buff_B_ichannel_2,
+                             self.buff_B_ichannel_3, self.buff_C_ichannel_0, self.buff_C_ichannel_1, self.buff_C_ichannel_2, self.buff_C_ichannel_3,
+                             self.buff_D_ichannel_0, self.buff_D_ichannel_1, self.buff_D_ichannel_2, self.buff_D_ichannel_3]
+        
+    def get_textbox(self):
+        if self.tabview.get()=="Image":
+            return self.textbox
+        elif self.tabview.get()=="Common":
+            return self.textbox_common
+        elif self.tabview.get()=="Buf A":
+            return self.textbox_A 
+        elif self.tabview.get()=="Buf B":
+            return self.textbox_B
+        elif self.tabview.get()=="Buf C":
+            return self.textbox_C
+        elif self.tabview.get()=="Buf D":
+            return self.textbox_D
+            
+    def clear_code(self):
+        textbox = self.get_textbox()
+        textbox.delete("1.0","end")
+        
+    def copy_code(self):
+        textbox = self.get_textbox()
+        self.clipboard_append(textbox.get(tkinter.SEL_FIRST, tkinter.SEL_LAST))
+        
+    def paste_code(self):
+        textbox = self.get_textbox()
+        try: textbox.insert(textbox.index('insert'), self.clipboard_get())
+        except: pass
+        
+    def save_code(self):
+        textbox = self.get_textbox()
+        file_name = f"Untitled_{self.tabview.get().replace(' ', '_')}.glsl"
+        if not os.path.isdir(self.mydir):
+            os.mkdir(self.mydir)
+        save_file = tkinter.filedialog.asksaveasfilename(filetypes =[('GLSL', ['*glsl']),('All Files', '*.*')], initialdir=self.mydir, initialfile=file_name)
+        if save_file:
+            with open(save_file, "w") as f:
+                f.write(textbox.get(1.0, tkinter.END))
+        self.check_shader_folder()
+        self.combobox_1.configure(values=self.myeffects)
+        
+    def check_shader_folder(self):
+        # Import some shaders from the default folder (My Shaders) if exists
+        self.mydir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "My Shaders")
+        self.myeffects = ["Custom"]
+        if os.path.isdir(self.mydir):
+            scriptfiles = os.listdir(self.mydir)
+            for i in scriptfiles:
+                if os.path.splitext(i)[1]==".glsl":
+                    self.myeffects.append(i)
+        else:
+            print("No shader folder found!")
+            
     def dynamic_scrollbar(self, x, y, scrollbar):
         if float(x)==0.0 and float(y)==1.0:
             scrollbar.configure(button_color=scrollbar.cget("bg_color"), button_hover_color=scrollbar.cget("bg_color"))
@@ -289,30 +360,8 @@ class HomePage(customtkinter.CTk):
             self.values.append(f"texture{self.num}")
             self.num+=1
             
-            self.ichannel_0.configure(values=self.values)
-            self.ichannel_1.configure(values=self.values)
-            self.ichannel_2.configure(values=self.values)
-            self.ichannel_3.configure(values=self.values)
-            
-            self.buff_A_ichannel_0.configure(values=self.values)
-            self.buff_A_ichannel_1.configure(values=self.values)
-            self.buff_A_ichannel_2.configure(values=self.values)
-            self.buff_A_ichannel_3.configure(values=self.values)
-            
-            self.buff_B_ichannel_0.configure(values=self.values)
-            self.buff_B_ichannel_1.configure(values=self.values)
-            self.buff_B_ichannel_2.configure(values=self.values)
-            self.buff_B_ichannel_3.configure(values=self.values)
-
-            self.buff_C_ichannel_0.configure(values=self.values)
-            self.buff_C_ichannel_1.configure(values=self.values)
-            self.buff_C_ichannel_2.configure(values=self.values)
-            self.buff_C_ichannel_3.configure(values=self.values)
-
-            self.buff_D_ichannel_0.configure(values=self.values)
-            self.buff_D_ichannel_1.configure(values=self.values)
-            self.buff_D_ichannel_2.configure(values=self.values)
-            self.buff_D_ichannel_3.configure(values=self.values)             
+        for i in self.option_menus:
+            i.configure(values=self.values)
             
     def do_popup(self, event, frame):
             try: frame.tk_popup(event.x_root, event.y_root)
@@ -328,24 +377,9 @@ class HomePage(customtkinter.CTk):
             self.open_video.configure(text="Input Video")
             
     def add_code(self, code):
-        if self.tabview.get()=="Image":
-            self.textbox.delete("1.0","end")
-            self.textbox.insert(1.0, code)
-        elif self.tabview.get()=="Common":
-            self.textbox_common.delete("1.0","end")
-            self.textbox_common.insert(1.0, code)
-        elif self.tabview.get()=="Buf A":
-            self.textbox_A.delete("1.0","end")
-            self.textbox_A.insert(1.0, code)
-        elif self.tabview.get()=="Buf B":
-            self.textbox_B.delete("1.0","end")
-            self.textbox_B.insert(1.0, code)
-        elif self.tabview.get()=="Buf C":
-            self.textbox_C.delete("1.0","end")
-            self.textbox_C.insert(1.0, code)
-        elif self.tabview.get()=="Buf D":
-            self.textbox_D.delete("1.0","end")
-            self.textbox_D.insert(1.0, code)
+        textbox = self.get_textbox()
+        textbox.delete("1.0","end")
+        textbox.insert(1.0, code)
             
     def open_script(self, value):
         """ opens a filedialog to import a script with the custom option """
@@ -365,34 +399,27 @@ class HomePage(customtkinter.CTk):
         """ preview the rendered window """
         global preview
         if not ofile:
-            tkinter.messagebox.showinfo("No Input Channel", "Please Import a Video!")
+            tkinter.messagebox.showinfo("No input channel", "Please import a video file!")
             return
         elif len(self.textbox.get(1.0, "end-1c"))<5:
-            tkinter.messagebox.showinfo("No Script", "Please enter your script in the textbox!")
+            tkinter.messagebox.showinfo("No valid script", "Please enter some script in the textbox!")
             return
         preview = True
         
-        try:
-            self.saveButton.configure(state=tkinter.DISABLED)
-            self.previewButton.configure(state=tkinter.DISABLED)
-            self.process()
-            self.saveButton.configure(state=tkinter.NORMAL)
-            self.previewButton.configure(state=tkinter.NORMAL)
-        except:
-            self.saveButton.configure(state=tkinter.NORMAL)
-            self.previewButton.configure(state=tkinter.NORMAL)
-            warnings.warn("Shader Error")
-            arcade.exit()
-            return
+        self.saveButton.configure(state=tkinter.DISABLED)
+        self.previewButton.configure(state=tkinter.DISABLED)
+        self.process()
+        self.saveButton.configure(state=tkinter.NORMAL)
+        self.previewButton.configure(state=tkinter.NORMAL)
 
     def render_export(self):
         """ render out the shader """
         global preview, newdir, output_file
         if not ofile:
-            tkinter.messagebox.showinfo("No input channel found", "Please import a video file!")
+            tkinter.messagebox.showinfo("No input channel", "Please import a video file!")
             return
         elif len(self.textbox.get(1.0, "end-1c"))<5:
-            tkinter.messagebox.showinfo("No script found", "Please enter some script in the textbox!")
+            tkinter.messagebox.showinfo("No valid script", "Please enter some script in the textbox!")
             return
         res = tkinter.messagebox.askquestion("Export","Do you want to render the video with this shader?")
         
@@ -415,20 +442,12 @@ class HomePage(customtkinter.CTk):
                                                  initialfile=os.path.splitext(ofile)[0]+os.path.splitext(self.combobox_1.get())[0]+".mp4")
             if not output_file:
                 return
-        try:
-            self.saveButton.configure(state=tkinter.DISABLED)
-            self.previewButton.configure(state=tkinter.DISABLED)
-            self.process()
-            self.saveButton.configure(state=tkinter.NORMAL)
-            self.previewButton.configure(state=tkinter.NORMAL)
-        except:
-            self.saveButton.configure(state=tkinter.NORMAL)
-            self.previewButton.configure(state=tkinter.NORMAL)   
-            warnings.warn("Shader Error")
-            if preview==False:
-                warnings.warn("Error loading the frames, please retry!")
-            arcade.exit()
-            return
+
+        self.saveButton.configure(state=tkinter.DISABLED)
+        self.previewButton.configure(state=tkinter.DISABLED)
+        self.process()
+        self.saveButton.configure(state=tkinter.NORMAL)
+        self.previewButton.configure(state=tkinter.NORMAL)
         
         if self.option_switch.get()==0 and preview==False:
             self.out.release() # incase the render window is closed forcefully
@@ -494,7 +513,32 @@ class HomePage(customtkinter.CTk):
                 except:
                     warnings.warn("Error in Image code!")
                     window.close()
-                    
+                    return
+                
+                try: window.shadertoy.buffer_a = window.shadertoy.create_buffer(buffer_code_A) if len(buffer_code_A)>5 else None
+                except:
+                    warnings.warn("Error in Buffer-A code!")
+                    window.close()
+                    return
+                
+                try: window.shadertoy.buffer_b = window.shadertoy.create_buffer(buffer_code_B) if len(buffer_code_B)>5 else None
+                except:
+                    warnings.warn("Error in Buffer-B code!")
+                    window.close()
+                    return
+                
+                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_C) if len(buffer_code_C)>5 else None
+                except:
+                    warnings.warn("Error in Buffer-C code!")
+                    window.close()
+                    return
+                
+                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_D) if len(buffer_code_D)>5 else None
+                except:
+                    warnings.warn("Error in Buffer-D code!")
+                    window.close()
+                    return
+         
                 window.video = cv2.VideoCapture(ofile)
                 width, height = (int(window.video.get(cv2.CAP_PROP_FRAME_WIDTH)),
                                  int(window.video.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -503,26 +547,12 @@ class HomePage(customtkinter.CTk):
                 window.video_texture.wrap_y = window.ctx.CLAMP_TO_EDGE
                 window.video_texture.swizzle = "BGR1"
                 
-                try: window.shadertoy.buffer_a = window.shadertoy.create_buffer(buffer_code_A) if len(buffer_code_A)>5 else None
+                try: window.set_size(width, height)
                 except:
-                    warnings.warn("Error in Buffer-A code!")
+                    warnings.warn("Not a valid video file!")
                     window.close()
-                      
-                try: window.shadertoy.buffer_b = window.shadertoy.create_buffer(buffer_code_B) if len(buffer_code_B)>5 else None
-                except:
-                    warnings.warn("Error in Buffer-B code!")
-                    window.close()
-         
-                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_C) if len(buffer_code_C)>5 else None
-                except:
-                    warnings.warn("Error in Buffer-C code!")
-                    window.close()
-              
-                try: window.shadertoy.buffer_c = window.shadertoy.create_buffer(buffer_code_D) if len(buffer_code_D)>5 else None
-                except:
-                    warnings.warn("Error in Buffer-D code!")
-                    window.close()
-                    
+                    return
+                
                 for i in range(4):
                     window.add_channels(self, channel=i, buffer=window.shadertoy, boxes="self.ichannel")
                     
@@ -542,8 +572,6 @@ class HomePage(customtkinter.CTk):
                     for i in range(4):
                         window.add_channels(self, channel=i, buffer=window.shadertoy.buffer_d, boxes="self.buff_D_ichannel")
                         
-                window.set_size(width, height)
-
                 if self.option_switch.get()==0 and preview==False:
                     self.out = cv2.VideoWriter(output_file, cv2.VideoWriter_fourcc(*'mp4v'), window.video.get(cv2.CAP_PROP_FPS), (width, height))
                 
@@ -588,8 +616,9 @@ class HomePage(customtkinter.CTk):
                         window.video.set(1, 0)
                             
         ShadertoyVideo(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-        arcade.run()
-            
+        try: arcade.run()
+        except: arcade.exit()
+        
     def on_closing(self, event=0):
         self.destroy()
         arcade.exit()
