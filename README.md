@@ -39,7 +39,7 @@ I have collected some **effect-shaders** from shadertoy.com which you can **down
 In some rare cases, you also have to **force quit** the program if the shader window freezes after any complex shader-error.
 
 ## Future Development
-- Live Preview is unstable and is not implemented. (The demo video was just to show the effects)
+- Live Editing is unstable and is not implemented. (The demo video was just to show the common effects)
 - Any suggestion or pull requests are welcomed. 
 
 Please Note: This project is released under MIT license **without any warranty**!
