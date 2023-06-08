@@ -27,10 +27,6 @@ https://user-images.githubusercontent.com/89206401/194752036-e2c7df0e-4646-4ed9-
 
 This is an *experimental* project based on this [shadertoy feature](https://github.com/pythonarcade/arcade/blob/development/arcade/experimental/shadertoy.py) of [Arcade](https://github.com/pythonarcade/arcade). 
 
-There is always some chances of shader errors with this tool so I recommend you to copy the shaders properly from shadertoy. 
-
-Sometimes, you have to keep on closing the shader window and try running it again.
-
 **You can right click on the open button to import any texture image.**
 
 I have collected some **effect-shaders** from shadertoy.com which you can **download** from here. *(Sources are given within the files)*
@@ -39,7 +35,7 @@ I have collected some **effect-shaders** from shadertoy.com which you can **down
 
 *Paste the `My Shaders` folder with ShaderToyVid.*
 
-Sometimes you also have to **force quit** the program if the shader window freezes after any complex shader-error.
+In some rare cases, you also have to **force quit** the program if the shader window freezes after any complex shader-error.
 
 ## Future Development
 - Live Preview is unstable and is not implemented. (The demo video was just to show the effects)
