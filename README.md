@@ -9,7 +9,7 @@ This is a tool built with python that can easily display and render any effect-s
 - Quick conversions
 - Add buffers and external textures
 - Built-in Code Editor
-- Apply effects like CRT filters, VHS filters, glitch and retro effects, and much more (**Read Details**)
+- Apply any shadertoy effect shader (**Read Details**)
 
 ![screenshot](https://github.com/Akascape/ShaderToyVid/assets/89206401/7cffb76e-b7b1-4e37-8ba5-7c474581e6d3)
 
